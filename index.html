@@ -54,7 +54,7 @@
 
  
     var loadAllPages = function(pageId) {
-      if(pageId == total_pages) {
+      if(pageId > total_pages) {
         $('#loader').html("loading finished") ;
         return ;
       }
