@@ -57,7 +57,7 @@
 
     var loadAllPages = function(pageId) {
       if(pageId == total_pages) {
-        $('#loader').html("loading finished") ;
+        $('#load_er').html("loading finished") ;
         return ;
       }
         $.ajax({
@@ -96,7 +96,7 @@
           success: function(data) {
             console.log(tumblr_api_read) ;
             total_posts = parseInt(tumblr_api_read["posts-total"]) ;
-            total_pages = parseInt( total_posts / num ) ;
+            total_pages = parseInt( total_posts / num ) + 1 ;
 
             loadAllPages(0) ;
           },
