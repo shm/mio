@@ -14,7 +14,7 @@
 
   <div id="container" class="container">
     <header>
-      <span id="loader"><img id="loading" src="./img/loader.gif" /> Loading ...</span>
+      <span id="load_er"><img id="loading" src="./img/loader.gif" /><span id="loader">Loading ...</span></span>
     </header>
 <div class="row">
     <table id="main" role="main" class="table">
@@ -73,6 +73,8 @@
                 }) ;
                 pageId += 1 ;
                 loadAllPages(pageId) ;
+
+                $('#loader').html("loading page " + pageId + " of " + total_pages + " (Posts: " + total_posts + ")" ) ;
               },
               failure: function() {
                 console.log("failure") ;
