@@ -13,6 +13,10 @@
 
   <meta name="viewport" content="width=device-width,initial-scale=1">
 
+  <style>
+    td.artist { text-transform: capitalize; }
+
+  </style>
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
 
   <script src="js/libs/modernizr-2.0.6.min.js"></script>
@@ -26,7 +30,7 @@
     </header>
 <div class="row">
     <table id="main" role="main" class="table">
-        <thead><tr><th>Date</th><th>Artist</th><th>Title</th><th>link</th></tr></thead>
+        <thead><tr><th>Date</th><th>Artist - Title</th><th>link</th></tr></thead>
         <tbody>
         </tbody>
     </table>
@@ -67,20 +71,23 @@
                 var myData = tumblr_api_read ;
                 _.each(myData.posts, function(e) {
                     var caption = e['video-caption'] || e['quote-source'] ;
+                    var slug = e['slug'];
                     var info = ["", ""];
                     if( caption != undefined ) {
                         info = caption.split(" - ") ;
                     }
+                    console.log(info);
                     var title = "" ;
                     var link = e['url'] ;
                     var artist = info[0] ;
                     if( info.length == 2 ) {
-                        title = info[1] ;
+                        title = info[1] || slug.split('-').join(" ");
                     }
-                   $('#main tbody').append("<tr><td class='date'>" + e['date']+ "</td><td>" + artist + "</td><td>" + title + "</td><td><a href=" + link + ">link</a></tr>") ;
+                    console.log(slug);
+                   $('#main tbody').append("<tr><td class='date'>" + e['date']+ "</td><td class='artist'>" + (artist ? (artist + " - ") : "" ) + " " + title + "</td><td><a href=" + link + ">link</a></tr>") ;
                 }) ;
                 pageId += 1 ;
-                loadAllPages(pageId) ;
+               loadAllPages(pageId) ;
 
                 $('#loader').html("loading page " + pageId + " of " + total_pages + " (Posts: " + total_posts + ")" ) ;
               },
@@ -90,6 +97,7 @@
             }) ;
     }
 
+    console.log("loading ..");
     $.ajax({
           url: "http://musicdiaries.tumblr.com/api/read/json?num="+num,
           dataType: 'script',
