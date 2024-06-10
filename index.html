@@ -26,6 +26,7 @@
 
   <div id="container" class="container">
     <header>
+      <span id="error"></span>
       <span id="load_er"><img id="loading" src="./img/loader.gif" /><span id="loader">Loading ...</span></span>
     </header>
 <div class="row">
@@ -51,7 +52,10 @@
   <!-- end scripts-->
 
   <script type="text/javascript">
+
   $(function() {
+
+
 
     var num = 50 ;
     var total_pages = 0 ;
@@ -65,7 +69,7 @@
         return ;
       }
         $.ajax({
-              url: "http://musicdiaries.tumblr.com/api/read/json?num="+num + "&start=" + (pageId * num),
+              url: "https://musicdiaries.tumblr.com/api/read/json?num="+num + "&start=" + (pageId * num),
               dataType: 'script',
               success: function(data) {
                 var myData = tumblr_api_read ;
@@ -91,15 +95,15 @@
 
                 $('#loader').html("loading page " + pageId + " of " + total_pages + " (Posts: " + total_posts + ")" ) ;
               },
-              failure: function() {
-                console.log("failure") ;
+              error: function (request, status, error) {
+               console.log(request.responseText);
               }
             }) ;
     }
 
     console.log("loading ..");
     $.ajax({
-          url: "http://musicdiaries.tumblr.com/api/read/json?num="+num,
+          url: "https://musicdiaries.tumblr.com/api/read/json?num="+num,
           dataType: 'script',
           success: function(data) {
             console.log(tumblr_api_read) ;
@@ -108,7 +112,7 @@
 
             loadAllPages(0) ;
           },
-          failure: function() {
+          error: function() {
             console.log("failure") ;
           }
         }) ;
